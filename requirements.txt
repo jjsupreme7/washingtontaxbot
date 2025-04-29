@@ -3,13 +3,15 @@ uvicorn
 pydantic
 python-dotenv
 openai
-pinecone
+pinecone-client
 cohere
 chromadb
 scikit-learn
-nltk
+nltk==3.8.1
 tiktoken
 numpy
 python-dateutil
 rapidfuzz
+sentence-transformers
+
 
