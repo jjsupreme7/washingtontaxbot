@@ -1,14 +1,15 @@
 fastapi
 uvicorn
-openai
+pydantic
 python-dotenv
+openai
 pinecone
-chromadb
-nltk
 cohere
-rapidfuzz
-numpy
-tiktoken
+chromadb
 scikit-learn
+nltk
+tiktoken
+numpy
 python-dateutil
+rapidfuzz
 
