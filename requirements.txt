@@ -2,7 +2,7 @@ fastapi
 uvicorn
 openai
 python-dotenv
-pinecone-client
+pinecone
 chromadb
 nltk
 cohere
