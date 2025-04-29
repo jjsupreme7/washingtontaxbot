@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+openai
+python-dotenv
+pinecone-client
+chromadb
+nltk
+cohere
+rapidfuzz
+numpy
