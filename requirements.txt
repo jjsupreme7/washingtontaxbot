@@ -1,5 +1,4 @@
 fastapi
-tiktoken
 uvicorn
 openai
 python-dotenv
@@ -9,3 +8,7 @@ nltk
 cohere
 rapidfuzz
 numpy
+tiktoken
+scikit-learn
+python-dateutil
+
