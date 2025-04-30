@@ -58,13 +58,10 @@ if not os.path.exists("_chroma_storage"):
             with open(part_file, "rb") as f_in:
                 shutil.copyfileobj(f_in, f_out)
 
-        # Append the final .zip tail
-        with open("chroma_split_24mb.zip", "rb") as f_in:
-            shutil.copyfileobj(f_in, f_out)
-
     print("📂 Extracting ChromaDB from chroma_full.zip...")
     with zipfile.ZipFile("chroma_full.zip", "r") as zip_ref:
         zip_ref.extractall(".")
+
 
 # Updated: Use PersistentClient for ChromaDB
 chroma_client = PersistentClient(path="./_chroma_storage")
