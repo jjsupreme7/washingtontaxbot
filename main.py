@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from chatbot2 import process_query, get_all_filenames
 from dotenv import load_dotenv
 import os
+import uvicorn
 from pinecone import Pinecone
 import nltk
 
@@ -55,3 +56,5 @@ async def ask_taxbot(request: QuestionRequest):
         raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
 
 
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=False)
