@@ -877,6 +877,6 @@ def main():
             conversation_context.append({'query': follow_up_query, 'response': answer})
 
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+    #main()
 
