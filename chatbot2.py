@@ -2,8 +2,10 @@ import os
 import re
 import csv
 import time
+import zipfile
 import json
 import sys
+import shutil
 import math
 import datetime
 import numpy as np
@@ -40,6 +42,29 @@ PINECONE_INDEX = os.getenv("PINECONE_INDEX_NAME")
 client = OpenAI(api_key=OPENAI_API_KEY)
 pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(PINECONE_INDEX)
+
+
+# 🔁 Only unzip if _chroma_storage isn't already present
+if not os.path.exists("_chroma_storage"):
+    print("📦 Recombining ChromaDB split archive...")
+
+    # Create the full zip file from parts
+    with open("chroma_full.zip", "wb") as f_out:
+        for i in range(1, 100):  # adjust if more than 99 parts
+            part_ext = f"z{str(i).zfill(2)}"
+            part_file = f"chroma_split_24mb.{part_ext}"
+            if not os.path.exists(part_file):
+                break
+            with open(part_file, "rb") as f_in:
+                shutil.copyfileobj(f_in, f_out)
+
+        # Append the final .zip tail
+        with open("chroma_split_24mb.zip", "rb") as f_in:
+            shutil.copyfileobj(f_in, f_out)
+
+    print("📂 Extracting ChromaDB from chroma_full.zip...")
+    with zipfile.ZipFile("chroma_full.zip", "r") as zip_ref:
+        zip_ref.extractall(".")
 
 # Updated: Use PersistentClient for ChromaDB
 chroma_client = PersistentClient(path="./_chroma_storage")
