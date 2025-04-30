@@ -68,49 +68,19 @@ def match_legal_patterns(text):
     return matches
 
 
-def build_topic_filter(topics, doc_types=None, start_date=None, end_date=None, document_ids=None):
-    """
-    Builds a metadata filter dictionary based on extracted topics, doc types, dates, document IDs,
-    and optionally specific rule citations (RCWs, WACs, ETAs).
-    """
+def build_topic_filter(query, doc_ids):
+    topics = extract_keywords(query)
+    rule_refs = enhanced_legal_citation_extraction(query)
     metadata_filter = {}
-
-    # 🔵 Topic-based filtering
     if topics:
-        topic_variants = set()
-        for t in topics:
-            topic_variants.update({t, t.lower(), t.title(), t.capitalize()})
-        metadata_filter["tags"] = {"$in": list(topic_variants)}
-
-    # 🔵 Document type filtering
-    filtered_doc_types = []
-    if doc_types:
-        type_variants = set()
-        for dt in doc_types:
-            type_variants.update({dt, dt.lower(), dt.upper(), dt.title()})
-        filtered_doc_types = list(type_variants)
-        metadata_filter["doc_type"] = {"$in": filtered_doc_types}
-
-    # 🔵 Date filtering (only for ETA/WTD)
-    if (start_date or end_date) and any(dt.lower() in ['eta', 'wtd'] for dt in filtered_doc_types):
-        metadata_filter["date"] = {}
-        if start_date:
-            metadata_filter["date"]["$gte"] = start_date
-        if end_date:
-            metadata_filter["date"]["$lte"] = end_date
-
-    # 🔵 Document ID filtering
-    if document_ids:
-        metadata_filter["document_id"] = {"$in": document_ids}
-
-    # 🔵 ✳️ NEW: Rule citation filtering
-    use_rule_filter = input("🔎 Do you want to filter WTDs by a specific RCW, WAC, or ETA cited? (y/n): ").strip().lower()
-    if use_rule_filter == 'y':
-        rule_filter = input("📚 Enter the RCW, WAC, or ETA you want to find (e.g., 'RCW 82.04.050'):\n> ").strip()
-        if rule_filter:
-            metadata_filter["rule_cited"] = {"$in": [rule_filter]}
-
-    return metadata_filter if metadata_filter else None
+        metadata_filter["tags"] = {"$in": list(set(topics))}
+    if rule_refs:
+        rules = rule_refs.get("rcw", []) + rule_refs.get("wac", []) + rule_refs.get("eta", [])
+        if rules:
+            metadata_filter["rule_cited"] = {"$in": rules}
+    if doc_ids:
+        metadata_filter["document_id"] = {"$in": doc_ids}
+    return metadata_filter or None
 
 
 
@@ -410,33 +380,8 @@ def extract_date_from_metadata(metadata):
     return 0
 
 def get_all_filenames(index, sample_size=10000):
-    """
-    Retrieve unique document identifiers (formerly filenames) from the Pinecone index metadata.
-    Now uses 'document_id' as the canonical identifier for matching.
-    """
-    try:
-        results = index.query(
-            vector=[0.0] * 3072,  # Use dummy vector
-            top_k=sample_size,
-            include_metadata=True
-        )
-
-        all_ids = set()
-        for match in results['matches']:
-            doc_id = match['metadata'].get('document_id') or match['id']
-            if doc_id:
-                all_ids.add(doc_id)
-
-        if not all_ids:
-            print("⚠️ Warning: No document_ids found in the index.")
-        else:
-            print(f"🔍 Index contains approximately {len(all_ids)} unique document identifiers.")
-
-        return list(all_ids)
-
-    except Exception as e:
-        print(f"Error in get_all_filenames(): {e}")
-        return []
+    results = index.query(vector=[0.0]*EMBED_DIM, top_k=sample_size, include_metadata=True)
+    return list({match['metadata'].get('document_id') or match['id'] for match in results['matches'] if match})
 
 
 
@@ -454,16 +399,7 @@ def query_pinecone_by_filename(index, filenames, query_vector, top_k=10):
     return results
 
 def detect_doc_ids_in_query(query_text, known_doc_ids):
-    """
-    Detect document IDs explicitly mentioned in the user query.
-    E.g., if the user mentions '38WTD57', this will detect it.
-    """
-    mentioned = []
-    lowered_query = query_text.lower()
-    for doc_id in known_doc_ids:
-        if doc_id.lower() in lowered_query:
-            mentioned.append(doc_id)
-    return mentioned
+    return [doc_id for doc_id in known_doc_ids if doc_id.lower() in query_text.lower()]
 
 
 
@@ -702,112 +638,22 @@ def convert_to_timestamp(date_str):
     except Exception:
         return None
 
-def process_query(query: str, all_filenames: list, conversation_context: list) -> str:
-    """
-    Processes a user query by applying optional filters and retrieving relevant documents.
-    """
-
-    # 🔍 Step 1: Extract intelligent tags from query
-    extracted_topics = extract_keywords(query)
-    print(f"🔑 Extracted topics from query: {extracted_topics}")
-
-    # 🔎 Step 2: Ask if user wants filters
-    apply_filters = input("🛠️ Do you want to apply advanced filters (doc type, date, recency)? (y/n): ").strip().lower()
-
-    # Initialize all config vars
-    metadata_filter = None
-    document_ids = []
-    doc_id_mode = "ignore"
-    doc_types = []
-    start_date = end_date = None
-
-    if apply_filters == "y":
-        # ✳️ Collect filters
-        doc_type_input = input("📄 Filter by document type? (e.g., RCW, ETA, WTD — comma-separated)\n> ").strip()
-        doc_types = [d.strip() for d in doc_type_input.split(',') if d.strip()]
-
-        start_input = input("📆 Start date (YYYY-MM-DD or YYYY)? Leave blank to skip:\n> ").strip()
-        end_input = input("📆 End date (YYYY-MM-DD or YYYY)? Leave blank to skip:\n> ").strip()
-        start_date = convert_to_timestamp(start_input)
-        end_date = convert_to_timestamp(end_input)
-
-        doc_id_input = input("🆔 Filter by document ID(s)? (comma-separated, leave blank to skip):\n> ").strip()
-        document_ids = [d.strip() for d in doc_id_input.split(',') if d.strip()]
-
-        if document_ids:
-            print(f"📂 You selected document IDs: {document_ids}")
-            doc_id_mode_input = input("🔧 Do you want to (1) only search these, (2) prioritize these but search broadly, or (3) ignore them? Enter 1/2/3:\n> ").strip()
-            doc_id_mode = {"1": "strict", "2": "boost", "3": "ignore"}.get(doc_id_mode_input, "boost")
-
-        metadata_filter = build_topic_filter(extracted_topics, doc_types, start_date, end_date, document_ids)
-        if metadata_filter:
-            print(f"🔍 Applying filters: topics={extracted_topics}, doc_types={doc_types}, dates={start_date} to {end_date}")
-        else:
-            print("⚠️ No metadata filters applied. Searching across all documents.")
-    else:
-        metadata_filter = None
-        doc_id_mode = "ignore"
-        document_ids = []
-        print("🔍 Skipping filters — searching entire index.")
-
-    # 🧠 Step 3: Detect any doc IDs mentioned in natural language query
-    mentioned_ids = detect_doc_ids_in_query(query, all_filenames)
-
-    if doc_id_mode == "boost":
-        document_ids = list(set(document_ids or []).union(set(mentioned_ids)))
-
-    # 📈 Step 4: Recency and quantity preferences
-    try:
-        recency_weight = float(input("🕒 Prioritize recent documents? (0-10, where 10 is most recent)\n> ").strip() or 0) / 10
-    except ValueError:
-        recency_weight = 0.0
-        print("⚠️ Invalid value for recency. Using default (0).")
-
-    try:
-        docs_needed = int(input("📚 How many documents to retrieve? (default: 10)\n> ").strip() or 10)
-    except ValueError:
-        docs_needed = 10
-        print("⚠️ Invalid document count. Using default (10).")
-
-    # 🔍 Step 5: Run document search
-    print("🔍 Performing intelligent document retrieval...")
+def process_query(query, all_filenames, conversation_context):
+    print(f"🔑 Extracted topics from query: {extract_keywords(query)}")
+    doc_ids = detect_doc_ids_in_query(query, all_filenames)
+    metadata_filter = build_topic_filter(query, doc_ids)
     chunks = hybrid_query_by_documents(
         query_text=query,
         index=index,
-        docs_needed=docs_needed,
-        metadata_filter=metadata_filter if doc_id_mode != "ignore" else None,
-        recency_weight=recency_weight,
-        doc_id_mode=doc_id_mode,
-        filtered_doc_ids=document_ids
+        docs_needed=10,
+        metadata_filter=metadata_filter,
+        recency_weight=0.2,
+        doc_id_mode="boost",
+        filtered_doc_ids=doc_ids
     )
-
-    # ✅ Smart fallback: retry with no filters if nothing found
-    if not chunks and apply_filters == "y":
-        print("⚠️ No documents found with filters applied. Retrying without filters...")
-        chunks = hybrid_query_by_documents(
-            query_text=query,
-            index=index,
-            docs_needed=docs_needed * 2,  # optional: double retrieval size on fallback
-            metadata_filter=None,
-            recency_weight=recency_weight,
-            doc_id_mode="ignore",
-            filtered_doc_ids=[]
-        )
-
     if not chunks:
-        print("❌ No relevant documents found.")
-        return "No relevant information found."
-
-    # 🤖 Step 6: Ask GPT-4
-    print("🤖 Asking GPT-4...")
-    answer = ask_chatgpt(query, chunks)
-
-    # 📎 Step 7: Source preview
-    print("\n📎 **Sources:**")
-    for src in format_sources(chunks):
-        print(f"- {src}")
-
-    return answer
+        return "❌ No relevant information found."
+    return ask_chatgpt(query, chunks)
 
 
 
