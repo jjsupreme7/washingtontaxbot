@@ -3,7 +3,7 @@ uvicorn
 pydantic
 python-dotenv
 openai
-pinecone-client
+pinecone
 cohere
 chromadb
 scikit-learn
