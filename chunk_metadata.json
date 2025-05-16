@@ -21525,8 +21525,14 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["RCW 82.08.962"],
-    "tags": ["Machinery and equipment (M&E)","Exemption","generating electricity"]
+    "rule_cited": [
+      "RCW 82.08.962"
+    ],
+    "tags": [
+      "Machinery and equipment (M&E)",
+      "Exemption",
+      "generating electricity"
+    ]
   },
   {
     "document_id": "34WTD066",
@@ -21534,8 +21540,15 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["RCW 82.08.0273","ETA 3054"],
-    "tags": ["Nonresident","Exemption","Records"]
+    "rule_cited": [
+      "RCW 82.08.0273",
+      "ETA 3054"
+    ],
+    "tags": [
+      "Nonresident",
+      "Exemption",
+      "Records"
+    ]
   },
   {
     "document_id": "34WTD016",
@@ -21543,8 +21556,15 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["RCW 82.08.02565","RCW 82.04.110"],
-    "tags": ["Machinery and equipment (M&E)","Exemption","Definition of manufacturer"]
+    "rule_cited": [
+      "RCW 82.08.02565",
+      "RCW 82.04.110"
+    ],
+    "tags": [
+      "Machinery and equipment (M&E)",
+      "Exemption",
+      "Definition of manufacturer"
+    ]
   },
   {
     "document_id": "34WTD036",
@@ -21552,8 +21572,14 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["RCW 82.04.260(7)","ETA 3019"],
-    "tags": ["Stevedoring and associated activities","Vessel Berthing"]
+    "rule_cited": [
+      "RCW 82.04.260(7)",
+      "ETA 3019"
+    ],
+    "tags": [
+      "Stevedoring and associated activities",
+      "Vessel Berthing"
+    ]
   },
   {
     "document_id": "34WTD030",
@@ -21561,8 +21587,21 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["RCW 82.04.470","Rule 254","RCW 82.32.070","RCW 82.32.100"],
-    "tags": ["Substantiation","Reseller permit","Reseller permit","Resale certificate","Facts and circumstances","Gifts","Bank Deposits"]
+    "rule_cited": [
+      "RCW 82.04.470",
+      "Rule 254",
+      "RCW 82.32.070",
+      "RCW 82.32.100"
+    ],
+    "tags": [
+      "Substantiation",
+      "Reseller permit",
+      "Reseller permit",
+      "Resale certificate",
+      "Facts and circumstances",
+      "Gifts",
+      "Bank Deposits"
+    ]
   },
   {
     "document_id": "34WTD056",
@@ -21570,7 +21609,219 @@
     "doc_type": "WTD",
     "date": "02/10/2015",
     "issuer": "DOR",
-    "rule_cited": ["Rule 254","RCW 82.32.070","Rule 100","RCW 82.32.160","Rule 254(3)"],
-    "tags": ["Substantiation","Best evidence","Appeal process","Impact of bankruptcy filing"]
+    "rule_cited": [
+      "Rule 254",
+      "RCW 82.32.070",
+      "Rule 100",
+      "RCW 82.32.160",
+      "Rule 254(3)"
+    ],
+    "tags": [
+      "Substantiation",
+      "Best evidence",
+      "Appeal process",
+      "Impact of bankruptcy filing"
+    ]
+  },
+  {
+    "document_id": "33WTD572",
+    "title": "Det. No. 13-0302R , 33 WTD 572 (December 30 , 2014)   572",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 254",
+      "RCW 82.32.070"
+    ],
+    "tags": [
+      "Recordkeeping",
+      "Reasonable estimates"
+    ]
+  },
+  {
+    "document_id": "33WTD583",
+    "title": "Det. No.  14-0005R , 33 WTD 583 (December 30, 2014 )  583",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "RCW 82.45.030(1)",
+      "WAC 458-61A-103(2)"
+    ],
+    "tags": [
+      "Real estate excise tax",
+      "REET",
+      "Nonrecourse debt",
+      "Transferor's benefit",
+      "Exclusion",
+      "From purchase price"
+    ]
+  },
+  {
+    "document_id": "33WTD554",
+    "title": "Det. No. 13-0207, 33 WTD 554 (December 30 , 2014 )  554",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "RCW 82.29A.030",
+      "82.29A.120"
+    ],
+    "tags": [
+      "Leasehold excise tax credit"
+    ]
+  },
+  {
+    "document_id": "33WTD594",
+    "title": "Det. No. 14-0133, 33 WTD 594 (December 30 , 2014 )  594",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "WAC 458-61A-101",
+      "RCW 82.45.010",
+      "RCW 82.45.033",
+      "WAC 458-61A-102",
+      "RCW 82.45.030"
+    ],
+    "tags": [
+      "Real estate excise tax",
+      "REET",
+      "Transfer or acquisition",
+      "Controlling interest transfer",
+      "Extinguishment of llc interest",
+      "Valuable consideration",
+      "Relief from making capital contributions",
+      "Exemptions",
+      "Right of survivorship",
+      "Assignment of a vendor's interest in a contract for sale",
+      "Order of sale by a court in a foreclosure",
+      "Quitclaim deed given for clearing title"
+    ]
+  },
+  {
+    "document_id": "33WTD562",
+    "title": "Det. No. 13-0263, 33 WTD 562 (December 30 , 2014 )  562",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 247",
+      "RCW 82.08.010(1)"
+    ],
+    "tags": [
+      "Trade in property",
+      "Of like kind"
+    ]
+  },
+  {
+    "document_id": "33WTD607",
+    "title": "Det. No. 14-0191, 33 WTD 607 (December 30 , 2014 )  607",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 177",
+      "RCW 82.08.0264"
+    ],
+    "tags": [
+      "Exemption",
+      "Sales of motor vehicles",
+      "Nonresidents for use outside the state",
+      "proof required"
+    ]
+  },
+  {
+    "document_id": "33WTD623",
+    "title": "Det. No. 14-0217, 33 WTD 623 (December 30, 2014 )  623",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 167",
+      "RCW 82.04.4284",
+      "RCW 82.08.037"
+    ],
+    "tags": [
+      "Bad debt",
+      "Deduction",
+      "Bona fide debts"
+    ]
+  },
+  {
+    "document_id": "33WTD591",
+    "title": "Det. No. 14-0104, 33 WTD 591 (December 30 , 2014 )  591",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 193",
+      "RCW 82.04.220"
+    ],
+    "tags": [
+      "Nexus",
+      "In state solicitation of business",
+      "Trailing Nexus"
+    ]
+  },
+  {
+    "document_id": "33WTD578",
+    "title": "Det. No. 13-0367, 33 WTD 578 (December 30, 2014 )  578",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": [
+      "Rule 186",
+      "RCW 82.24.020"
+    ],
+    "tags": [
+      "Cigarette tax",
+      "Imposition"
+    ]
+  },
+  {
+    "document_id": "33WTD600",
+    "title": "Det. No. 14-0178, 33 WTD 600 (December 30 , 2014 )  600",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": ["ETA 3183","RCW 82.04.290","RCW 82.04.293"],
+    "tags": ["International investment","Management services","Primarily engaged"]
+  },
+  {
+    "document_id": "33WTD612",
+    "title": "Det. No.  14-0201, 33 WTD 612 (December 30, 2014 )  612",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": ["Rule 183","RCW 82.04.050(3)(a)(i)","ETA 3167"],
+    "tags": ["Retail sales tax","Amusement and recreation services","Basketball tournaments and leagues","League fees","Entry fees"]
+  },
+  {
+    "document_id": "33WTD528",
+    "title": "Det. No. 14-0063, 33 WTD 528 ( October 31, 2014)   528",
+    "doc_type": "WTD",
+    "date": "10/31/2014",
+    "issuer": "DOR",
+    "rule_cited": ["WAC 458-20-167","RCW 82.04.170","RCW 82.04.4282"],
+    "tags": ["Deduction","Tuition fees","Specialty of trade school"]
+  },
+  {
+    "document_id": "33WTD637",
+    "title": "Det. No. 14-0268, 33 WTD 637 (December 30 , 2014 )  637",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": ["RCW 82.32.090(7)","WAC 458-20-228(5)(f)"],
+    "tags": ["Evasion penalty","Intent to evade","Motivation"]
+  },
+  {
+    "document_id": "33WTD632",
+    "title": "Det. No. 14-0257, 33 WTD 632 (December 30 , 2014 )  632",
+    "doc_type": "WTD",
+    "date": "12/30/2014",
+    "issuer": "DOR",
+    "rule_cited": ["WAC 458-61A-102","WAC 458-61A-201","RCW 82.45.030"],
+    "tags": ["Real estate excise tax","REET","Consideration","Quitclaim by copurchaser","Assumption of debt"]
   }
 ]
